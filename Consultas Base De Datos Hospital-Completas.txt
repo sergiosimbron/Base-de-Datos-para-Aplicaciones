@@ -1,0 +1,134 @@
+                        CONSULTAS HOSPITAL
+------------------------------------------------------------------------
+
+consulta 1
+------------------------------------------------------------------------
+
+select nombre, apellido from Personas where id IN
+(select idPersona from Empleado where idTipoEmpleado = 4 and idCargo = 3 and idDependencia = 5)
+
+------------------------------------------------------------------------
+
+consulta 2
+------------------------------------------------------------------------
+
+select nombre, apellido from Persona where id IN 
+(select idPersona from Empleado where idUsuario IN 
+(select id from Usuarios where id IN 
+(select idUsuario from PermisosXUsuario where idPermiso = 5)) and idTipoEmpleado = 2 and idDependencia = 8)
+
+------------------------------------------------------------------------
+
+consulta 3
+------------------------------------------------------------------------
+
+select Persona.nombre, Persona.apellido, Factura.id, Pago.fechaDePago from Persona inner join Factura inner join Pago where id In
+(select idPersona from Paciente where idHistoriaClinica In 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Tratamiento where idTipoTratamiento = 6)) and id IN 
+(select idPaciente from Factura where id IN 
+(select idFactura from Cuenta where valor >5000)))
+
+------------------------------------------------------------------------
+
+consulta 4
+------------------------------------------------------------------------
+
+select nombre, apellido from Persona where id IN 
+(select idPersona from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Tratamiento where idTipoTratamiento = 10)) and id IN 
+(select idPaciente from Factura where id IN 
+(select idFactura from Cuenta where valor between 2500 and 6000) and id IN 
+(select idFactura from Pago where idFormaDePago IN 
+(select id from FormaDePago where nombre = 'efectivo'))))
+
+------------------------------------------------------------------------
+
+consulta 5
+------------------------------------------------------------------------
+
+select nombre, apellido from Persona where id IN 
+(select idPersona from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Tratamiento where idTipoTratamiento = 12) and id IN 
+(select idHistoriaClinica from Dieta where id = 15)) and id IN 
+(select idPaciente from Factura where id IN 
+(select idFactura from Cuenta where valor >1000) and id IN 
+(select idFactura from Pago where fechaDePago = '12-Marzo-2015')))
+
+------------------------------------------------------------------------
+
+consulta 6
+------------------------------------------------------------------------
+
+select nombre, apellido from Persona where id IN 
+(select idPersona from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Examen where id IN 
+(select idExamen from Resultado where fechaEntrega = '25-Agosto-2014')) and id In 
+(select idHistoriaClinica from Dieta where id = 8)))
+
+------------------------------------------------------------------------
+
+consulta 7
+------------------------------------------------------------------------
+
+select nombre, apellido from Persona where id IN 
+(select idPersona from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Tratamiento where idTipoTratamiento = 5) and id IN 
+(select idHistoriaClinica from Dieta where id = 11)) and id IN 
+(select idPaciente from Factura where id IN 
+(select idFactura from Pago where idFormaDePago IN 
+(select id from FormaDePago where nombre = 'tarjeta de credito')))) 
+
+------------------------------------------------------------------------
+
+consulta 8
+------------------------------------------------------------------------
+
+select AVG(valor) from Pago where idFactura IN 
+(select id from Factura where idPaciente IN 
+(select id from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Dieta where id = 3)))) and idFormaDePago IN (select id from FormaDePago where nombre = 'cheque')
+
+------------------------------------------------------------------------
+
+consulta 9
+------------------------------------------------------------------------
+
+select AVG(valor) from Pago where idFactura IN 
+(select id from Factura where idPaciente IN 
+(select id from Paciente where idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Examen where idTipoExamen = 16) and id IN 
+(select idHistoriaClinica from Dieta where id = 4))))
+
+------------------------------------------------------------------------
+
+consulta 10
+------------------------------------------------------------------------
+
+select variance(idTipoTratamiento) from Tratamiento where fechaInicio LIKE '%2010'
+
+------------------------------------------------------------------------
+
+consulta 11
+------------------------------------------------------------------------
+
+select variance(idTipoExamen) from Examen where fechaAplicacion LIKE '%2011' and idHistoriaClinica IN 
+(select id from HistoriaClinica where id IN 
+(select idHistoriaClinica from Dieta where id = 6))
+
+
+
+
+
+
+
+
+
+
+
